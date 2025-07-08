@@ -32,6 +32,8 @@
         </select>
         <input type="text" id="ign" placeholder="Minecraft Username" required>
         <input type="text" id="gcash" placeholder="GCash Number Used" required>
+        <p><strong>Reference ID:</strong> <span id="refID"></span>
+        <button type="button" id="copyRef">Copy Ref ID</button></p>
         <button type="submit">Submit Payment Info</button>
       </form>
       <p id="statusMsg"></p>
@@ -42,21 +44,44 @@
     Server: <strong>RevolveSMP</strong>
   </footer>
 <script>
-document.getElementById("paymentForm").addEventListener("submit", async function (e) {
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0,
+          v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+const form = document.getElementById("paymentForm");
+const statusMsg = document.getElementById("statusMsg");
+const refDisplay = document.getElementById("refID");
+const refCopyBtn = document.getElementById("copyRef");
+
+const refID = generateUUID();
+refDisplay.innerText = refID;
+
+refCopyBtn.addEventListener("click", () => {
+  navigator.clipboard.writeText(refID);
+  refCopyBtn.innerText = "Copied!";
+  setTimeout(() => refCopyBtn.innerText = "Copy Ref ID", 1500);
+});
+
+form.addEventListener("submit", async function (e) {
   e.preventDefault();
   const item = document.getElementById("item").value;
   const ign = document.getElementById("ign").value;
   const gcash = document.getElementById("gcash").value;
 
   const msg = [
+    "<@1354819465237369069>", // Replace with real Discord ID (e.g., <@1073152893008379905>)
     "**[RevolveSMP GCash Payment Submitted]**",
     "**Item:** " + item,
     "**IGN:** " + ign,
-    "**GCash No:** " + gcash
+    "**GCash No:** " + gcash,
+    "**Ref ID:** " + refID
   ].join("\n");
 
   const payload = { content: msg };
-  const statusMsg = document.getElementById("statusMsg");
 
   statusMsg.innerText = "Submitting to Discord...";
   try {
@@ -65,11 +90,11 @@ document.getElementById("paymentForm").addEventListener("submit", async function
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-    statusMsg.innerText = "✅ Submitted! Don't forget to DM proof to Vaelmir on Discord.";
+    statusMsg.innerText = "✅ Submitted! Include Ref ID in your GCash message. DM proof to @Angkool.";
     e.target.reset();
   } catch (err) {
     console.error(err);
-    statusMsg.innerText = "❌ Failed to submit. Try again or message Vaelmir.";
+    statusMsg.innerText = "❌ Failed to submit. Try again or message @Angkool.";
   }
 });
 </script>
