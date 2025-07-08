@@ -41,36 +41,39 @@
     ⏳ Items delivered manually. After paying, please DM your GCash proof and Minecraft name to <strong>Vaelmir</strong> on Discord.<br>
     Server: <strong>RevolveSMP</strong>
   </footer>
-  <script>
-    const form = document.getElementById('paymentForm');
-    const statusMsg = document.getElementById('statusMsg');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const item = document.getElementById('item').value;
-      const ign = document.getElementById('ign').value;
-      const gcash = document.getElementById('gcash').value;
+<script>
+const form = document.getElementById('paymentForm');
+const statusMsg = document.getElementById('statusMsg');
 
-      const payload = {
-        content: "**[RevolveSMP GCash Payment Submitted]**\n"
-               + "**Item:** " + item + "\n"
-               + "**IGN:** " + ign + "\n"
-               + "**GCash No:** " + gcash
-      };
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-      statusMsg.innerText = "Submitting to Discord...";
-      try {
-        await fetch("https://discord.com/api/webhooks/1392118947096297513/HmnA_H1hVWmAPTCw9dVXSQTleevR3Tu8Q4x89ZzFTw7CA6vfDBnAyD2QSwci_3XUdQJP", {
-          method: "POST",
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        statusMsg.innerText = "✅ Submitted! Don't forget to DM proof to Vaelmir on Discord.";
-        form.reset();
-      } catch (error) {
-        console.error(error);
-        statusMsg.innerText = "❌ Failed to submit. Try again or message Vaelmir.";
-      }
+  const item = document.getElementById('item').value;
+  const ign = document.getElementById('ign').value;
+  const gcash = document.getElementById('gcash').value;
+
+  const payload = {
+    content: `**[RevolveSMP GCash Payment Submitted]**
+**Item:** ${item}
+**IGN:** ${ign}
+**GCash No:** ${gcash}`
+  };
+
+  statusMsg.innerText = "Submitting to Discord...";
+
+  try {
+    await fetch("https://discord.com/api/webhooks/1392118947096297513/HmnA_H1hVWmAPTCw9dVXSQTleevR3Tu8Q4x89ZzFTw7CA6vfDBnAyD2QSwci_3XUdQJP", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
-  </script>
+    statusMsg.innerText = "✅ Submitted! Don't forget to DM proof to Vaelmir on Discord.";
+    form.reset();
+  } catch (err) {
+    console.error(err);
+    statusMsg.innerText = "❌ Failed to submit. Try again or contact Vaelmir.";
+  }
+});
+</script>
 </body>
 </html>
