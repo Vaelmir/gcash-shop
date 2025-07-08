@@ -1,82 +1,77 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HexenSMP Item Shop</title>
+  <title>RevolveSMP GCash Shop</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0e0e0e;
-      color: #fff;
-      text-align: center;
-      padding: 40px;
-    }
-    .shop-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    .shop-item {
-      background: #1c1c1c;
-      border: 2px solid #444;
-      border-radius: 12px;
-      padding: 20px;
-      width: 300px;
-    }
-    .shop-item img.qr {
-      width: 200px;
-      margin: 10px 0;
-    }
-    .shop-item input, .shop-item button {
-      padding: 10px;
-      margin: 5px;
-      width: 90%;
-      border-radius: 5px;
-      border: none;
-    }
-    .shop-item button {
-      background: #4caf50;
-      color: white;
-      cursor: pointer;
-    }
-    .shop-item button:hover {
-      background: #45a049;
-    }
-    footer {
-      margin-top: 40px;
-      font-size: 0.85em;
-      color: #aaa;
-    }
+    body { background: #0f0f0f; color: #fff; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 40px; }
+    .shop-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .shop-item { background: #1e1e1e; border: 2px solid #333; border-radius: 10px; padding: 20px; width: 300px; box-shadow: 0 0 10px #222; }
+    img.qr { width: 200px; margin: 15px 0; border: 2px solid #444; border-radius: 6px; }
+    input, button { padding: 10px; margin: 5px; width: 90%; border-radius: 5px; border: none; }
+    button { background: #ff5722; color: white; font-weight: bold; cursor: pointer; }
+    button:hover { background: #e64a19; }
+    footer { margin-top: 40px; color: #aaa; font-size: 0.9em; }
   </style>
 </head>
 <body>
-  <h1>🛒 HexenSMP Shop</h1>
+  <h1>🛒 RevolveSMP GCash Shop</h1>
   <div class="shop-container">
     <div class="shop-item">
-      <h2>🔥 Premium Rank - ₱150</h2>
-      <p>Includes: Fly in spawn, Endermite particles, Flame rings, Mount: Infernal Horror</p>
+      <h2>⭐ Premium Rank – ₱200</h2>
+      <p>Claim-only fly • Endermite pet • Flame ring particles</p>
       <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
-      <form onsubmit="alert('After sending payment, DM proof to Discord: Vaelmir'); return false;">
-        <input type="text" placeholder="Your Minecraft Username" required>
+      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
+        <input type="text" placeholder="Minecraft Username" required>
         <input type="text" placeholder="GCash Number Used" required>
         <button type="submit">I PAID – Submit Info</button>
       </form>
     </div>
     <div class="shop-item">
-      <h2>💎 Abysswalker Set - ₱200</h2>
-      <p>Powerful crate gear with visual effects and abilities.</p>
+      <h2>🧊 Shady Crate – ₱20</h2>
+      <p>Random mysterious items from the Shady realm</p>
       <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
-      <form onsubmit="alert('After sending payment, DM proof to Discord: Vaelmir'); return false;">
-        <input type="text" placeholder="Your Minecraft Username" required>
+      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
+        <input type="text" placeholder="Minecraft Username" required>
+        <input type="text" placeholder="GCash Number Used" required>
+        <button type="submit">I PAID – Submit Info</button>
+      </form>
+    </div>
+    <div class="shop-item">
+      <h2>🎯 Destiny Crate – ₱20</h2>
+      <p>Fate-based drops with surprise loot</p>
+      <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
+      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
+        <input type="text" placeholder="Minecraft Username" required>
+        <input type="text" placeholder="GCash Number Used" required>
+        <button type="submit">I PAID – Submit Info</button>
+      </form>
+    </div>
+    <div class="shop-item">
+      <h2>🌟 Radiant Crate – ₱30</h2>
+      <p>Brilliant items with particle enhancements</p>
+      <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
+      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
+        <input type="text" placeholder="Minecraft Username" required>
+        <input type="text" placeholder="GCash Number Used" required>
+        <button type="submit">I PAID – Submit Info</button>
+      </form>
+    </div>
+    <div class="shop-item">
+      <h2>💀 Abyss Crate – ₱30</h2>
+      <p>Void-infused gear and rare abyssal loot</p>
+      <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
+      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
+        <input type="text" placeholder="Minecraft Username" required>
         <input type="text" placeholder="GCash Number Used" required>
         <button type="submit">I PAID – Submit Info</button>
       </form>
     </div>
   </div>
   <footer>
-    After payment, please send proof and your Minecraft username to Discord: <strong>Vaelmir</strong><br>
-    We will verify and give your item within 5-10 minutes if staff is online.
+    ⏳ Items delivered manually. After paying, please DM your GCash proof and Minecraft name to <strong>Vaelmir</strong> on Discord.<br>
+    Server: <strong>RevolveSMP</strong>
   </footer>
 </body>
 </html>
