@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
     .shop-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
     .shop-item { background: #1e1e1e; border: 2px solid #333; border-radius: 10px; padding: 20px; width: 300px; box-shadow: 0 0 10px #222; }
     img.qr { width: 200px; margin: 15px 0; border: 2px solid #444; border-radius: 6px; }
-    input, button { padding: 10px; margin: 5px; width: 90%; border-radius: 5px; border: none; }
+    input, select, button { padding: 10px; margin: 5px; width: 90%; border-radius: 5px; border: none; }
     button { background: #ff5722; color: white; font-weight: bold; cursor: pointer; }
     button:hover { background: #e64a19; }
     footer { margin-top: 40px; color: #aaa; font-size: 0.9em; }
@@ -17,61 +16,61 @@
 </head>
 <body>
   <h1>🛒 RevolveSMP GCash Shop</h1>
+  <p>Select your item and submit proof:</p>
   <div class="shop-container">
     <div class="shop-item">
-      <h2>⭐ Premium Rank – ₱200</h2>
-      <p>Claim-only fly • Endermite pet • Flame ring particles</p>
+      <h2>🛍️ Submit Payment Info</h2>
       <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
-      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
-        <input type="text" placeholder="Minecraft Username" required>
-        <input type="text" placeholder="GCash Number Used" required>
-        <button type="submit">I PAID – Submit Info</button>
+      <form id="paymentForm">
+        <select id="item" required>
+          <option value="" disabled selected>Select item</option>
+          <option value="Premium Rank – ₱200">⭐ Premium Rank – ₱200</option>
+          <option value="Shady Crate – ₱20">🧊 Shady Crate – ₱20</option>
+          <option value="Destiny Crate – ₱20">🎯 Destiny Crate – ₱20</option>
+          <option value="Radiant Crate – ₱30">🌟 Radiant Crate – ₱30</option>
+          <option value="Abyss Crate – ₱30">💀 Abyss Crate – ₱30</option>
+        </select>
+        <input type="text" id="ign" placeholder="Minecraft Username" required>
+        <input type="text" id="gcash" placeholder="GCash Number Used" required>
+        <button type="submit">Submit Payment Info</button>
       </form>
-    </div>
-    <div class="shop-item">
-      <h2>🧊 Shady Crate – ₱20</h2>
-      <p>Random mysterious items from the Shady realm</p>
-      <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
-      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
-        <input type="text" placeholder="Minecraft Username" required>
-        <input type="text" placeholder="GCash Number Used" required>
-        <button type="submit">I PAID – Submit Info</button>
-      </form>
-    </div>
-    <div class="shop-item">
-      <h2>🎯 Destiny Crate – ₱20</h2>
-      <p>Fate-based drops with surprise loot</p>
-      <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
-      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
-        <input type="text" placeholder="Minecraft Username" required>
-        <input type="text" placeholder="GCash Number Used" required>
-        <button type="submit">I PAID – Submit Info</button>
-      </form>
-    </div>
-    <div class="shop-item">
-      <h2>🌟 Radiant Crate – ₱30</h2>
-      <p>Brilliant items with particle enhancements</p>
-      <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
-      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
-        <input type="text" placeholder="Minecraft Username" required>
-        <input type="text" placeholder="GCash Number Used" required>
-        <button type="submit">I PAID – Submit Info</button>
-      </form>
-    </div>
-    <div class="shop-item">
-      <h2>💀 Abyss Crate – ₱30</h2>
-      <p>Void-infused gear and rare abyssal loot</p>
-      <img class="qr" src="gcash_qr.png" alt="GCash QR Code">
-      <form onsubmit="alert('After payment, send proof and IGN to Discord: Vaelmir'); return false;">
-        <input type="text" placeholder="Minecraft Username" required>
-        <input type="text" placeholder="GCash Number Used" required>
-        <button type="submit">I PAID – Submit Info</button>
-      </form>
+      <p id="statusMsg"></p>
     </div>
   </div>
   <footer>
     ⏳ Items delivered manually. After paying, please DM your GCash proof and Minecraft name to <strong>Vaelmir</strong> on Discord.<br>
     Server: <strong>RevolveSMP</strong>
   </footer>
+  <script>
+    const form = document.getElementById('paymentForm');
+    const statusMsg = document.getElementById('statusMsg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const item = document.getElementById('item').value;
+      const ign = document.getElementById('ign').value;
+      const gcash = document.getElementById('gcash').value;
+
+      const payload = {
+        content: "**[RevolveSMP GCash Payment Submitted]**\\n"
+               + "**Item:** " + item + "\\n"
+               + "**IGN:** " + ign + "\\n"
+               + "**GCash No:** " + gcash
+      };
+
+      statusMsg.innerText = "Submitting to Discord...";
+      try {
+        await fetch("https://discord.com/api/webhooks/1392118947096297513/HmnA_H1hVWmAPTCw9dVXSQTleevR3Tu8Q4x89ZzFTw7CA6vfDBnAyD2QSwci_3XUdQJP", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        statusMsg.innerText = "✅ Submitted! Don't forget to DM proof to Vaelmir on Discord.";
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        statusMsg.innerText = "❌ Failed to submit. Try again or message Vaelmir.";
+      }
+    });
+  </script>
 </body>
 </html>
