@@ -2,99 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RevolveSMP Shop</title>
   <style>
+    :root {
+      --bg-color: #0f0f0f;
+      --accent: #ff5722;
+      --card-bg: #1e1e1e;
+      --btn-bg: #333;
+      --hover: #e64a19;
+      --text-light: #aaa;
+      --text-white: #fff;
+    }
+    * { box-sizing: border-box; }
     body {
-      background: #0f0f0f;
-      color: #fff;
+      background: var(--bg-color);
+      color: var(--text-white);
       font-family: 'Segoe UI', sans-serif;
-      padding: 40px;
+      padding: 40px 20px;
       text-align: center;
     }
-
+    h1 {
+      font-size: 2.4em;
+      margin-bottom: 0.2em;
+    }
     .tab-buttons {
       margin-bottom: 20px;
     }
-
     .tab-buttons button {
-      background: #333;
-      color: #fff;
+      background: var(--btn-bg);
+      color: var(--text-white);
       border: none;
       padding: 10px 20px;
       margin: 5px;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      transition: background 0.3s;
     }
-
     .tab-buttons button.active {
-      background: #ff5722;
+      background: var(--accent);
     }
-
     .tab {
       display: none;
-      animation: fadeIn 0.3s ease-in-out;
+      animation: fadeIn 0.4s ease-in-out;
     }
-
     .tab.active {
       display: block;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     .shop-item {
-      background: #1e1e1e;
+      background: var(--card-bg);
       padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
-      max-width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      max-width: 440px;
       margin: auto;
     }
-
     img.qr {
       width: 200px;
       margin: 15px 0;
       border-radius: 6px;
     }
-
     input, select, button, label {
       width: 90%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
       border: none;
+      font-size: 1em;
     }
-
     button[type="submit"], .submit-btn {
-      background: #ff5722;
-      color: #fff;
+      background: var(--accent);
+      color: var(--text-white);
       font-weight: bold;
+      transition: background 0.3s;
     }
-
-    button[type="submit"]:hover {
-      background: #e64a19;
+    button[type="submit"]:hover, .submit-btn:hover {
+      background: var(--hover);
     }
-
     footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #aaa;
+      margin-top: 60px;
+      font-size: 0.95em;
+      color: var(--text-light);
+    }
+    .ref-box {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <h1>🛒 RevolveSMP Shop</h1>
-  <p>Choose a payment method:</p>
+  <p>Choose your payment method:</p>
 
   <div class="tab-buttons">
     <button class="tab-btn active" onclick="showTab('gcashTab')">🇵🇭 GCash</button>
     <button class="tab-btn" onclick="showTab('paypalTab')">🌐 PayPal</button>
   </div>
 
-  <!-- GCash Tab -->
   <div class="tab active" id="gcashTab">
     <div class="shop-item">
       <h2>🛍️ GCash Payment</h2>
@@ -110,88 +118,44 @@
         </select>
         <input type="text" id="ign" placeholder="Minecraft Username" required />
         <input type="text" id="gcash" placeholder="GCash Number Used" required />
-        <p><strong>Reference ID:</strong> <span id="refID"></span>
-        <button type="button" id="copyRef">Copy Ref ID</button></p>
+        <div class="ref-box">
+          <strong>Reference ID:</strong> <span id="refID"></span>
+          <button type="button" id="copyRef">Copy Ref ID</button>
+        </div>
         <button type="submit" class="submit-btn">Submit Payment Info</button>
       </form>
       <p id="statusMsg"></p>
     </div>
   </div>
 
-  <!-- PayPal Tab -->
   <div class="tab" id="paypalTab">
     <div class="shop-item">
       <h2>🌐 Pay with PayPal</h2>
-
       <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-        <input type="hidden" name="cmd" value="_xclick" />
-        <input type="hidden" name="business" value="asoniojohnpaul@gmail.com" />
-        <input type="hidden" name="item_name" value="Premium Rank – 30 Days" />
-        <input type="hidden" name="amount" value="3.50" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <label>⭐ Premium Rank – $3.50
-          <input type="text" name="custom" placeholder="Minecraft IGN" required />
-        </label>
-        <button type="submit">Buy</button>
-      </form>
-
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-        <input type="hidden" name="cmd" value="_xclick" />
-        <input type="hidden" name="business" value="asoniojohnpaul@gmail.com" />
-        <input type="hidden" name="item_name" value="Shady Crate Key" />
-        <input type="hidden" name="amount" value="0.35" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <label>🧊 Shady Crate – $0.35
-          <input type="text" name="custom" placeholder="Minecraft IGN" required />
-        </label>
-        <button type="submit">Buy</button>
-      </form>
-
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-        <input type="hidden" name="cmd" value="_xclick" />
-        <input type="hidden" name="business" value="asoniojohnpaul@gmail.com" />
-        <input type="hidden" name="item_name" value="Destiny Crate Key" />
-        <input type="hidden" name="amount" value="0.35" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <label>🎯 Destiny Crate – $0.35
-          <input type="text" name="custom" placeholder="Minecraft IGN" required />
-        </label>
-        <button type="submit">Buy</button>
-      </form>
-
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-        <input type="hidden" name="cmd" value="_xclick" />
-        <input type="hidden" name="business" value="asoniojohnpaul@gmail.com" />
-        <input type="hidden" name="item_name" value="Radiant Crate Key" />
-        <input type="hidden" name="amount" value="0.50" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <label>🌟 Radiant Crate – $0.50
-          <input type="text" name="custom" placeholder="Minecraft IGN" required />
-        </label>
-        <button type="submit">Buy</button>
-      </form>
-
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-        <input type="hidden" name="cmd" value="_xclick" />
-        <input type="hidden" name="business" value="asoniojohnpaul@gmail.com" />
-        <input type="hidden" name="item_name" value="Abyss Crate Key" />
-        <input type="hidden" name="amount" value="0.50" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <label>💀 Abyss Crate – $0.50
-          <input type="text" name="custom" placeholder="Minecraft IGN" required />
-        </label>
-        <button type="submit">Buy</button>
+        <select name="item_name" required>
+          <option value="">Select item</option>
+          <option value="Premium Rank – 30 Days">⭐ Premium Rank – $3.50</option>
+          <option value="Shady Crate Key">🧊 Shady Crate – $0.35</option>
+          <option value="Destiny Crate Key">🎯 Destiny Crate – $0.35</option>
+          <option value="Radiant Crate Key">🌟 Radiant Crate – $0.50</option>
+          <option value="Abyss Crate Key">💀 Abyss Crate – $0.50</option>
+        </select>
+        <input type="text" name="custom" placeholder="Minecraft IGN" required />
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="asoniojohnpaul@gmail.com">
+        <input type="hidden" name="amount" id="paypalAmount" value="">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="submit" value="Buy with PayPal" class="submit-btn">
       </form>
     </div>
   </div>
 
   <footer>
-    ⏳ After paying, DM proof and Ref ID to <strong>AngKool</strong> on Discord.  
+    ⏳ After paying, DM proof and Ref ID to <strong>AngKool</strong> on Discord.<br>
     Server: <strong>RevolveSMP</strong>
   </footer>
 
   <script>
-    // Tab toggle logic
     function showTab(id) {
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -199,7 +163,6 @@
       event.target.classList.add('active');
     }
 
-    // UUID generator
     function generateUUID() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -246,6 +209,18 @@
         console.error(err);
         statusMsg.innerText = "❌ Failed to submit.";
       }
+    });
+
+    // PayPal auto-fill amount based on selection
+    document.querySelector("#paypalTab select[name='item_name']").addEventListener("change", function () {
+      const val = this.value;
+      let amount = "";
+      if (val.includes("Premium")) amount = "3.50";
+      else if (val.includes("Shady")) amount = "0.35";
+      else if (val.includes("Destiny")) amount = "0.35";
+      else if (val.includes("Radiant")) amount = "0.50";
+      else if (val.includes("Abyss")) amount = "0.50";
+      document.getElementById("paypalAmount").value = amount;
     });
   </script>
 </body>
