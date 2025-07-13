@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HexenSMP GCash & PayPal Shop</title>
+  <style>
+    :root {
+      --bg-color: #0f0f0f;
+      --accent: #39E0C5;
+      --card-bg: #1e1e1e;
+      --btn-bg: #1a1a1a;
+      --hover: #2ec9b1;
+      --text-light: #aaa;
+      --text-white: #fff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg-color);
+      color: var(--text-white);
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.4em;
+      margin-bottom: 0.2em;
+    }
+    .tab-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-buttons button {
+      background: var(--btn-bg);
+      color: var(--text-white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.3s, transform 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .tab-buttons button:hover {
+      background: var(--hover);
+      transform: scale(1.05);
+    }
+    .tab-buttons button.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .tab {
+      display: none;
+      opacity: 0;
+      animation: fadeIn 0.4s ease-in-out forwards;
+    }
+    .tab.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .shop-item {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      max-width: 440px;
+      margin: auto;
+    }
+    img.qr {
+      width: 200px;
+      margin: 15px 0;
+      border-radius: 6px;
+    }
+    input, select, button, label {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: none;
+      font-size: 1em;
+    }
+    input:invalid, select:invalid {
+      border: 2px solid #ff4444;
+    }
+    button[type="submit"], .submit-btn {
+      background: var(--accent);
+      color: var(--text-white);
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    button[type="submit"]:hover, .submit-btn:hover {
+      background: var(--hover);
+    }
+    footer {
+      margin-top: 60px;
+      font-size: 0.95em;
+      color: var(--text-light);
+    }
+    .ref-box {
+      margin-top: 10px;
+    }
+    #hook-status {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: var(--text-light);
+    }
+  </style>
+</head>
+<body>
+  <h1>🛒 Shop</h1>
+  <p>Choose your payment method:</p>
+
+  <div class="tab-buttons">
+    <button class="tab-btn active" onclick="showTab(event, 'gcashTab')">🇵🇭 GCash</button>
+    <button class="tab-btn" onclick="showTab(event, 'paypalTab')">🌐 PayPal</button>
+  </div>
+
+  <div class="tab active" id="gcashTab">
+    <div class="shop-item">
+      <h2>🛍️ GCash Payment</h2>
+      <img class="qr" src="gcash_qr.png" alt="GCash QR Code" />
+      <form id="paymentForm">
+        <select id="item" required>
+          <option value="" disabled selected>Select item</option>
+          <option value="Premium Rank – ₱200">⭐ Premium Rank – ₱200</option>
+          <option value="Shady Crate – ₱20">🧊 Shady Cratex5 – ₱100</option>
+          <option value="Destiny Crate – ₱20">🎯 Destiny Cratex5 – ₱100</option>
+          <option value="Radiant Crate – ₱30">🌟 Radiant Cratex5 – ₱150</option>
+          <option value="Abyss Crate – ₱30">💀 Abyss Crate x5 – ₱150</option>
+        </select>
+        <input type="text" id="ign" placeholder="Minecraft Username" required />
+        <input type="text" id="gcash" placeholder="GCash Number Used" required />
+        <div class="ref-box">
+          <strong>Reference ID:</strong> <span id="refID"></span>
+          <button type="button" id="copyRef">Copy Ref ID</button>
+        </div>
+        <button type="submit" class="submit-btn">Submit Payment Info</button>
+      </form>
+      <div id="hook-status">🔄 Webhook Status: Checking...</div>
+    </div>
+  </div>
+
+  <div class="tab" id="paypalTab">
+    <div class="shop-item">
+      <h2>🌐 Pay with PayPal</h2>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+        <select name="item_name" required>
+          <option value="">Select item</option>
+          <option value="Premium Rank – 30 Days">⭐ Premium Rank – $3.50</option>
+          <option value="Shady Crate Key">🧊 Shady Crate x5 – $1.75</option>
+          <option value="Destiny Crate Key">🎯 Destiny Crate x5 – $1.75</option>
+          <option value="Radiant Crate Key">🌟 Radiant Crate x5 – $2.5</option>
+          <option value="Abyss Crate Key">💀 Abyss Crate x5 – $2.5</option>
+        </select>
+        <input type="text" name="custom" placeholder="Minecraft IGN" required />
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="asoniojohnpaul@gmail.com">
+        <input type="hidden" name="amount" id="paypalAmount" value="">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="submit" value="Buy with PayPal" class="submit-btn">
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    ⏳ After paying, DM proof and Ref ID to <strong>AngKool</strong> on Discord.<br>
+    Server: <strong>HexenSMP</strong>
+  </footer>
+
+  <script>
+    // Switch tabs
+    function showTab(e, id) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      e.target.classList.add('active');
+    }
+
+    // UUID Generator
+    function generateUUID() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    // Set UUID and handle copy
+    const refID = generateUUID();
+    document.getElementById("refID").innerText = refID;
+    document.getElementById("copyRef").onclick = () => {
+      navigator.clipboard.writeText(refID);
+      const btn = document.getElementById("copyRef");
+      btn.innerText = "Copied!";
+      setTimeout(() => btn.innerText = "Copy Ref ID", 1500);
+    };
+
+    // Toast Popup
+    function showToast(text, success = true) {
+      const toast = document.createElement("div");
+      toast.innerText = text;
+      toast.style.position = "fixed";
+      toast.style.bottom = "30px";
+      toast.style.left = "50%";
+      toast.style.transform = "translateX(-50%)";
+      toast.style.background = success ? "#2ecc71" : "#e74c3c";
+      toast.style.color = "white";
+      toast.style.padding = "12px 20px";
+      toast.style.borderRadius = "6px";
+      toast.style.fontWeight = "bold";
+      toast.style.zIndex = 9999;
+      toast.style.boxShadow = "0 0 10px rgba(0,0,0,0.4)";
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2500);
+    }
+
+    // Submit GCash webhook
+    document.getElementById("paymentForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const item = document.getElementById("item").value;
+      const ign = document.getElementById("ign").value;
+      const gcash = document.getElementById("gcash").value;
+      const msg = [
+        "<@1354819465237369069>",
+        "**[HexenSMP GCash Payment Submitted]**",
+        "**Item:** " + item,
+        "**IGN:** " + ign,
+        "**GCash No:** " + gcash,
+        "**Ref ID:** " + refID
+      ].join("\n");
+
+      const payload = { content: msg };
+
+      try {
+        await fetch("https://discord.com/api/webhooks/1393205618583535777/N8SMgqKSyk_Do07KYsLGf1Yx7-xB2FDOt0KreHIkbdhNLZiVP0-oftBR1KLblTjCtip6", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        showToast("✅ Submitted! DM proof to AngKool.");
+        this.reset();
+      } catch (err) {
+        console.error(err);
+        showToast("❌ Failed to submit.", false);
+      }
+    });
+
+    // PayPal amount autofill
+    document.querySelector("#paypalTab select[name='item_name']").addEventListener("change", function () {
+      const val = this.value;
+      let amount = "";
+      if (val.includes("Premium")) amount = "3.50";
+      else if (val.includes("Shady")) amount = "1.75";
+      else if (val.includes("Destiny")) amount = "1.75";
+      else if (val.includes("Radiant")) amount = "2.50";
+      else if (val.includes("Abyss")) amount = "2.50";
+      document.getElementById("paypalAmount").value = amount;
+    });
+
+    // Webhook status check
+    fetch("https://discord.com/api/v10/webhooks/1393205618583535777")
+      .then(res => {
+        document.getElementById("hook-status").innerText = res.ok ? "✅ Webhook Status: Online" : "❌ Webhook Offline";
+      })
+      .catch(() => {
+        document.getElementById("hook-status").innerText = "❌ Webhook Error";
+      });
+  </script>
+</body>
+</html>
